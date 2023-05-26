@@ -25,9 +25,9 @@ def set_volume(event):
         if process_id == active_window_pid.value:
             volume_level = volume_interface.GetMasterVolume()
 
-            if event == Event.down:
+            if event == Event.up:
                 volume_level = clamp(volume_level + VOLUME_STEP, 0, 1)
-            elif event == Event.up:
+            elif event == Event.down:
                 volume_level = clamp(volume_level - VOLUME_STEP, 0, 1)
 
             volume_interface.SetMasterVolume(volume_level, None)
@@ -36,9 +36,9 @@ def set_volume(event):
 def reset_global_volume(event):
     volume_level = volume_control.GetMasterVolumeLevelScalar()
 
-    if event == Event.down:
-        volume_level = clamp(volume_level - VOLUME_STEP, 0, 1)
     if event == Event.up:
+        volume_level = clamp(volume_level - VOLUME_STEP, 0, 1)
+    if event == Event.down:
         volume_level = clamp(volume_level + VOLUME_STEP, 0, 1)
 
     volume_control.SetMasterVolumeLevelScalar(volume_level, None)
