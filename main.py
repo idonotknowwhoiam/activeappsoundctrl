@@ -1,23 +1,28 @@
 import keyboard
-from volume import reset_global_volume, set_volume, Event
+from volume import reset_global_volume, set_active_volume
 
-VOLUME_DOWN_KEY = -174
-VOLUME_UP_KEY = -175
-WIN_KEY = 91
+VOLUME_UP_KEYCODE = -175
+VOLUME_DOWN_KEYCODE = -174
+DEFAUILT_VOLUME_STEP = 0.02
 
+# your hotkeys
+volume_up_key = -175
+volume_down_key = -174
+modifier_key = "ctrl"
+
+volume_step = 0.02
 
 while True:  
     keyboard.read_event()
     
-    event = None
+    if keyboard.is_pressed(volume_down_key) and keyboard.is_pressed(modifier_key):
+        if volume_down_key == VOLUME_DOWN_KEYCODE:
+            reset_global_volume(DEFAUILT_VOLUME_STEP)
 
-    if keyboard.is_pressed(VOLUME_DOWN_KEY) and keyboard.is_pressed(WIN_KEY):
-        event = Event.down
-        
-        reset_global_volume(event)
-        set_volume(event)
-    if keyboard.is_pressed(VOLUME_UP_KEY) and keyboard.is_pressed(WIN_KEY):
-        event = Event.up
-        reset_global_volume(event)
-        set_volume(event)
+        set_active_volume(-volume_step)
+    if keyboard.is_pressed(volume_up_key) and keyboard.is_pressed(modifier_key):
+        if volume_up_key == VOLUME_UP_KEYCODE:
+            reset_global_volume(-DEFAUILT_VOLUME_STEP) 
+
+        set_active_volume(volume_step)
 
